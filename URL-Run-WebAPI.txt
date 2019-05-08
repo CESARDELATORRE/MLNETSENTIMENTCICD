@@ -1,0 +1,9 @@
+
+WINDOWS based Azure App Service
+-------------------------------
+https://mlnetwebapidemowin.azurewebsites.net/api/predictor/sentimentprediction?sentimentText=ML.NET%20is%20awesome
+
+
+LINUX based Azure App Service
+-------------------------------
+https://mlnetwebapidemolinux.azurewebsites.net/api/predictor/sentimentprediction?sentimentText=ML.NET%20is%20awesome

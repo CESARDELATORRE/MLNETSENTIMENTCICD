@@ -1,0 +1,8 @@
+
+mlnet auto-train --task binary-classification --name DetoxModel --dataset "Data/wikiDetoxAnnotated40kRows.tsv" --label-column-name Label --ignore-columns "rev_id,year,logged_in,ns,sample,split" --max-exploration-time 500
+
+
+Columns:
+Label	rev_id	comment	year	logged_in	ns	sample	split
+
+
