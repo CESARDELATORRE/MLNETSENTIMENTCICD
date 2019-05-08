@@ -17,4 +17,10 @@
     <ProjectReference Include="..\SentimentModel\SentimentModel.Model\SentimentModel.Model.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="test_data.tsv">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
