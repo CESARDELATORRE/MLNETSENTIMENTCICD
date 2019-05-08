@@ -41,7 +41,6 @@ namespace SentimentModel.ConsoleApp
             Console.WriteLine($"Single Prediction --> Prediction for '{inputSampleText}' was PositiveSentiment = {predictionResult.Prediction}");
 
             Console.WriteLine("=============== End of process, hit any key to finish ===============");
-            Console.ReadKey();
         }
 
         // Here I create your my sample hard-coded data (Could be coming from an end-user app)
