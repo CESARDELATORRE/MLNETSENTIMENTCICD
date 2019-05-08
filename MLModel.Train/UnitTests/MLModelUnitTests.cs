@@ -17,7 +17,9 @@ namespace Tests
         //Machine Learning model to load and use for predictions
         private const string MODEL_FILEPATH = @"../../../../SentimentModel/SentimentModel.Model/MLModel.zip";
 
-        private const string TEST_DATA_FILEPATH = @"../../../test_data.tsv";
+        private const string UNIT_TEST_DATA_FILEPATH = @"../../../unit_test_data_baseline.tsv";
+
+        private const string EVALUATION_DATA_FILEPATH = @"../../../evaluation_dataset.tsv";
 
         [SetUp]
         public void Setup()
@@ -52,6 +54,32 @@ namespace Tests
             Assert.AreEqual(false, Convert.ToBoolean(resultprediction.Prediction));
         }
 
+ 
+        [Test]
+        public void TestAccuracyHigherThan60()
+        {
+            Console.WriteLine("===== Evaluating Model's accuracy with Evaluation/Test dataset =====");
+            
+            // Read dataset to get a single row for trying a prediction          
+            IDataView testDataView = _mlContext.Data.LoadFromTextFile<ModelInput>(
+                                            path: GetAbsolutePath(EVALUATION_DATA_FILEPATH),
+                                            hasHeader: true,
+                                            separatorChar: '\t');
+
+            IEnumerable<ModelInput> samplesForPrediction = _mlContext.Data.CreateEnumerable<ModelInput>(testDataView, false);
+
+            //DO BULK PREDICTIONS
+            IDataView predictionsDataView = _trainedModel.Transform(testDataView);
+
+            var predictions = _trainedModel.Transform(testDataView);
+            var metrics = _mlContext.BinaryClassification.Evaluate(data: predictionsDataView, labelColumnName: "sentiment", scoreColumnName: "Score");
+
+            double accuracy = metrics.Accuracy;
+            Console.WriteLine($"Accuracy of model in this validation '{accuracy*100}'%");
+            
+            Assert.GreaterOrEqual(0.80, accuracy);
+        }
+
         //Generate many test cases with a bulk prediction approach
         public static List<TestCaseData> TestCases
         {
@@ -62,7 +90,7 @@ namespace Tests
 
                 // Read dataset to get a single row for trying a prediction          
                 IDataView testDataView = mlContext.Data.LoadFromTextFile<ModelInput>(
-                                                path: GetAbsolutePath(TEST_DATA_FILEPATH),
+                                                path: GetAbsolutePath(UNIT_TEST_DATA_FILEPATH),
                                                 hasHeader: true,
                                                 separatorChar: '\t');
 
