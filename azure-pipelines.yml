@@ -48,3 +48,15 @@ steps:
 #     **\*test*.dll
 #     !**\*TestAdapter.dll
 #     !**\obj\**
+
+
+- task: CopyFiles@2
+  displayName: 'Copy ML model file from Trainer app to WebAPI app'
+  inputs:
+    SourceFolder: 'MLModel.Train/SentimentModel/SentimentModel.Model'
+    Contents: 'MLModel.zip'
+    TargetFolder: 'Scalable.WebAPI/ML'
+    verWrite: true
+
+
+
