@@ -31,3 +31,12 @@ steps:
 #  inputs:
 #    projects: MLModel.Train/UnitTests/UnitTests.csproj
 #    arguments: '--configuration $(BuildConfiguration)'
+
+- task: VSTest@2
+  displayName: 'Run Unit Tests using trained ML model'
+  inputs:
+    testAssemblyVer2: |
+     **\UnitTests.dll
+     **\*test*.dll
+     !**\*TestAdapter.dll
+     !**\obj\**
