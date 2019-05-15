@@ -22,3 +22,12 @@ steps:
 #    command: custom
 #    custom: SentimentModel.ConsoleApp.dll
 #    workingDirectory: MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/bin/Release/netcoreapp2.1
+
+- script: dotnet build MLModel.Train/UnitTests/UnitTests.csproj --configuration $(buildConfiguration)
+  displayName: 'Build Test project for ML Model (dotnet build) $(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build Unit Test project using the ML model'
+#  inputs:
+#    projects: MLModel.Train/UnitTests/UnitTests.csproj
+#    arguments: '--configuration $(BuildConfiguration)'
