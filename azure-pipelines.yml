@@ -13,13 +13,12 @@ steps:
 - script: dotnet build MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
   displayName: 'Build Trainer Console App (dotnet build) $(buildConfiguration)'
 
+- script: dotnet run --project MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
+  displayName: 'Train ML model (dotnet run)'
+
 #- task: DotNetCoreCLI@2
 #  displayName: 'Train ML model (Task)'
 #  inputs:
 #    command: custom
 #    custom: SentimentModel.ConsoleApp.dll
 #    workingDirectory: MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/bin/Release/netcoreapp2.1
-
-- script: dotnet run --project MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
-  displayName: 'Train ML model (dotnet run)'
-
