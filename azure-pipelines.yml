@@ -56,7 +56,7 @@ steps:
     SourceFolder: 'MLModel.Train/SentimentModel/SentimentModel.Model'
     Contents: 'MLModel.zip'
     TargetFolder: 'Scalable.WebAPI/ML'
-    verWrite: true
+    OverWrite: true
 
 
 
