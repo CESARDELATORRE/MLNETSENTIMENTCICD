@@ -32,6 +32,14 @@ steps:
 #    projects: MLModel.Train/UnitTests/UnitTests.csproj
 #    arguments: '--configuration $(BuildConfiguration)'
 
+- task: DotNetCoreCLI@2
+  displayName: 'Run Unit Tests using trained ML model'
+  inputs:
+    command: test
+    projects: '**/UnitTests.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+# VSTest@2 is only supported on Windows
 #- task: VSTest@2
 #  displayName: 'Run Unit Tests using trained ML model'
 #  inputs:
@@ -40,10 +48,3 @@ steps:
 #     **\*test*.dll
 #     !**\*TestAdapter.dll
 #     !**\obj\**
-
-- task: DotNetCoreCLI@2
-  displayName: 'Run Unit Tests using trained ML model'
-  inputs:
-    command: test
-    projects: '**/UnitTests.csproj'
-    arguments: '--configuration $(buildConfiguration)'
