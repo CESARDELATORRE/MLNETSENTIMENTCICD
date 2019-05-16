@@ -50,7 +50,6 @@ steps:
 #     !**\*TestAdapter.dll
 #     !**\obj\**
 
-
 - task: CopyFiles@2
   displayName: 'Copy ML model file from Trainer app to WebAPI app'
   inputs:
@@ -76,7 +75,5 @@ steps:
   inputs:
     artifactName: MLNETWebAPI
     targetPath: '$(Build.ArtifactStagingDirectory)'
-
-
 
 
