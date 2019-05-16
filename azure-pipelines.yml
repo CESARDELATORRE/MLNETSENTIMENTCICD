@@ -10,6 +10,7 @@ variables:
   buildConfiguration: 'Release'
 
 steps:
+
 - script: dotnet build MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
   displayName: 'Build Trainer Console App (dotnet build) $(buildConfiguration)'
 
@@ -57,6 +58,24 @@ steps:
     Contents: 'MLModel.zip'
     TargetFolder: 'Scalable.WebAPI/ML'
     OverWrite: true
+
+- script: dotnet build Scalable.WebAPI/Scalable.WebAPI.csproj --configuration $(buildConfiguration)
+  displayName: 'Build WebAPI service (dotnet build) $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Generate WebAPI binaries (dotnet publish)'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: Scalable.WebAPI/Scalable.WebAPI.csproj
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    modifyOutputPath: false
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish WebAPI as pipeline artifact'
+  inputs:
+    artifactName: MLNETWebAPI
+    targetPath: '$(Build.ArtifactStagingDirectory)'
 
 
 
