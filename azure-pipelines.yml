@@ -1,0 +1,79 @@
+# Build CI pipeline for ML.NET model, its trainer app and end-user WebAPI service
+
+trigger:
+- master
+
+pool:
+  vmImage: 'ubuntu-latest'
+
+variables:
+  buildConfiguration: 'Release'
+
+steps:
+
+- script: dotnet build MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
+  displayName: 'Build Trainer Console App (dotnet build) $(buildConfiguration)'
+
+- script: dotnet run --project MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
+  displayName: 'Train ML model (dotnet run)'
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Train ML model (Task)'
+#  inputs:
+#    command: custom
+#    custom: SentimentModel.ConsoleApp.dll
+#    workingDirectory: MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/bin/Release/netcoreapp2.1
+
+- script: dotnet build MLModel.Train/UnitTests/UnitTests.csproj --configuration $(buildConfiguration)
+  displayName: 'Build Test project for ML Model (dotnet build) $(buildConfiguration)'
+
+#- task: DotNetCoreCLI@2
+#  displayName: 'Build Unit Test project using the ML model'
+#  inputs:
+#    projects: MLModel.Train/UnitTests/UnitTests.csproj
+#    arguments: '--configuration $(BuildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Run Unit Tests using trained ML model'
+  inputs:
+    command: test
+    projects: '**/UnitTests.csproj'
+    arguments: '--configuration $(buildConfiguration)'
+
+# VSTest@2 is only supported on Windows
+#- task: VSTest@2
+#  displayName: 'Run Unit Tests using trained ML model'
+#  inputs:
+#    testAssemblyVer2: |
+#     **\UnitTests.dll
+#     **\*test*.dll
+#     !**\*TestAdapter.dll
+#     !**\obj\**
+
+- task: CopyFiles@2
+  displayName: 'Copy ML model file from Trainer app to WebAPI app'
+  inputs:
+    SourceFolder: 'MLModel.Train/SentimentModel/SentimentModel.Model'
+    Contents: 'MLModel.zip'
+    TargetFolder: 'Scalable.WebAPI/ML'
+    OverWrite: true
+
+- script: dotnet build Scalable.WebAPI/Scalable.WebAPI.csproj --configuration $(buildConfiguration)
+  displayName: 'Build WebAPI service (dotnet build) $(buildConfiguration)'
+
+- task: DotNetCoreCLI@2
+  displayName: 'Generate WebAPI binaries (dotnet publish)'
+  inputs:
+    command: publish
+    publishWebProjects: false
+    projects: Scalable.WebAPI/Scalable.WebAPI.csproj
+    arguments: '--configuration $(buildConfiguration) --output $(Build.ArtifactStagingDirectory)'
+    modifyOutputPath: false
+
+- task: PublishPipelineArtifact@0
+  displayName: 'Publish WebAPI as pipeline artifact'
+  inputs:
+    artifactName: MLNETWebAPI
+    targetPath: '$(Build.ArtifactStagingDirectory)'
+
+
