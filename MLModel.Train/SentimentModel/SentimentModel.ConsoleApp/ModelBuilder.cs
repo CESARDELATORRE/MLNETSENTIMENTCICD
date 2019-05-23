@@ -17,7 +17,7 @@ namespace SentimentModel.ConsoleApp
 {
     public static class ModelBuilder
     {
-        private static string TRAIN_DATA_FILEPATH = @"../../../../../Data/yelp_labelled.tsv";
+        private static string TRAIN_DATA_FILEPATH = @"X:\\yelp\\yelp_labelled.tsv";
         private static string MODEL_FILEPATH = @"../../../../SentimentModel.Model/MLModel.zip";
 
         // Create MLContext to be shared across the model creation workflow objects 
