@@ -19,7 +19,7 @@ namespace SentimentModel.ConsoleApp
         private const string MODEL_FILEPATH = @"../../../../SentimentModel.Model/MLModel.zip";
 
         //Dataset to use for predictions 
-        private const string DATA_FILEPATH = "X:\\yelp\\yelp_labelled.tsv";
+        private const string DATA_FILEPATH = "X:\\twitter\\Twittersentiment-1Million.tsv";
 
         static void Main(string[] args)
         {
