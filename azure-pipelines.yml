@@ -4,7 +4,7 @@ trigger:
 - master
 
 pool:
-  vmImage: 'windows-2019'
+  vmImage: 'MLWin2019VM'
 
 variables:
   buildConfiguration: 'Release'
