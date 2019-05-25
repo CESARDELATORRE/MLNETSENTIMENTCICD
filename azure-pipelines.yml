@@ -3,8 +3,13 @@
 trigger:
 - master
 
+# Microsoft hosted
+# pool:
+#   vmImage: 'windows-2019'
+
+# Custom VM self-hosted
 pool:
-  vmImage: 'MLWin2019VM'
+  name: Default
 
 variables:
   buildConfiguration: 'Release'
