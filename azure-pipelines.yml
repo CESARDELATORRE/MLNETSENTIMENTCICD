@@ -16,7 +16,7 @@ variables:
 
 steps:
 
-- script: 'net use X: \\mlnetfilestorage.file.core.windows.net\datasets /u:mlnetfilestorage $(mlnetfilestorage.key)'
+- script: 'if not exist X:\ (net use X: \\mlnetfilestorage.file.core.windows.net\datasets /u:mlnetfilestorage $(mlnetfilestorage.key))'
   displayName: 'Map disk drive to Azure Files share folder'
 
 - script: dotnet build MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
