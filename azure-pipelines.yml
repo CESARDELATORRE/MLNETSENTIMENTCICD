@@ -3,11 +3,11 @@
 trigger:
 - master
 
-# Microsoft hosted
+# Microsoft hosted agent
 # pool:
 #   vmImage: 'windows-2019'
 
-# Custom VM self-hosted
+# Custom VM self-hosted agent
 pool:
   name: Default
 
