@@ -7,7 +7,7 @@ trigger:
 # pool:
 #   vmImage: 'windows-2019'
 
-# Custom VM self-hosted agent
+# Custom self-hosted agent (Azure VM with Azure DevOps Agent)
 pool:
   name: Default
 
@@ -35,28 +35,12 @@ steps:
 - script: dotnet build MLModel.Train/UnitTests/UnitTests.csproj --configuration $(buildConfiguration)
   displayName: 'Build Test project for ML Model (dotnet build) $(buildConfiguration)'
 
-#- task: DotNetCoreCLI@2
-#  displayName: 'Build Unit Test project using the ML model'
-#  inputs:
-#    projects: MLModel.Train/UnitTests/UnitTests.csproj
-#    arguments: '--configuration $(BuildConfiguration)'
-
 - task: DotNetCoreCLI@2
   displayName: 'Run Unit Tests using trained ML model'
   inputs:
     command: test
     projects: '**/UnitTests.csproj'
     arguments: '--configuration $(buildConfiguration)'
-
-# VSTest@2 is only supported on Windows
-#- task: VSTest@2
-#  displayName: 'Run Unit Tests using trained ML model'
-#  inputs:
-#    testAssemblyVer2: |
-#     **\UnitTests.dll
-#     **\*test*.dll
-#     !**\*TestAdapter.dll
-#     !**\obj\**
 
 - task: CopyFiles@2
   displayName: 'Copy ML model file from Trainer app to WebAPI app'
