@@ -4,11 +4,11 @@ trigger:
 - master
 
 # Microsoft hosted agent
- pool:
-   vmImage: 'windows-2019'
+pool:
+  vmImage: 'windows-2019'
 
 # Custom self-hosted agent (Azure VM with Azure DevOps Agent)
-# pool:
+#pool:
 #  name: Default
 
 variables:
