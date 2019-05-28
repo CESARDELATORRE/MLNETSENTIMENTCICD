@@ -25,6 +25,7 @@ steps:
 - script: dotnet run --project MLModel.Train/SentimentModel/SentimentModel.ConsoleApp/SentimentModel.ConsoleApp.csproj --configuration $(buildConfiguration)
   displayName: 'Train ML model (dotnet run)'
 
+# Train running .dll instead of using 'dotnet run'
 #- task: DotNetCoreCLI@2
 #  displayName: 'Train ML model (Task)'
 #  inputs:
