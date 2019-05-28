@@ -17,11 +17,10 @@ namespace SentimentModel.ConsoleApp
 {
     public static class ModelBuilder
     {
-        // SMALL DATASET in GitHub repo: private const string TRAIN_DATA_FILEPATH = @"../../../../../Data/yelp_labelled.tsv";
-        // SMALL DATASET in AZURE FILES: private static string TRAIN_DATA_FILEPATH = @"X:\\yelp\\yelp_labelled.tsv";
-        
-        // LARGE DATASET in AZURE FILES: 
-        private static string TRAIN_DATA_FILEPATH = @"X:\\twitter\\Twittersentiment-1Million.tsv";
+        // SMALL DATASET in GitHub repo: 
+        private const string TRAIN_DATA_FILEPATH = @"../../../../../Data/yelp_labelled.tsv";    
+        // SMALL DATASET in AZURE FILES: private static string TRAIN_DATA_FILEPATH = @"X:\\yelp\\yelp_labelled.tsv";      
+        // LARGE DATASET in AZURE FILES: private static string TRAIN_DATA_FILEPATH = @"X:\\twitter\\Twittersentiment-1Million.tsv";
 
         private static string MODEL_FILEPATH = @"../../../../SentimentModel.Model/MLModel.zip";
 
